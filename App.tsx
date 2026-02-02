@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, Platform} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
 import { User, Mail, Bell, Settings, Heart } from 'lucide-react-native';
@@ -84,27 +84,27 @@ function AppContent() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
 
-        <Header
-          title="Component Library"
-          showBackButton={true}
-          onBackPress={() => { showSnackbar('Back Button clicked successfully!', SNACKBAR_PRIORITY.INFO) }}
-          rightAction={<Settings size={24} color={COLORS.text} />}
-        />
+      <Header
+        title="Component Library"
+        showBackButton={true}
+        onBackPress={() => { showSnackbar('Back Button clicked successfully!', SNACKBAR_PRIORITY.INFO) }}
+        rightAction={<Settings size={24} color={COLORS.text} />}
+      />
 
-          <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{ flex: 1 }}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
 
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
           {/* Section: Buttons */}
           <Text style={styles.sectionTitle}>Buttons</Text>
           <Card variant="outlined" padding="md">
-            <Button 
-              text="Regular Button" 
+            <Button
+              text="Regular Button"
               onPress={() => showSnackbar('Regular Button clicked successfully!', SNACKBAR_PRIORITY.INFO)}
             />
             <Spacer size={12} />
@@ -116,7 +116,7 @@ function AppContent() {
               text="With Icon Disabled Button"
               disabled={true}
               leftIcon={<Heart size={18} color={COLORS.white} />}
-              //onPress={() => showSnackbar('With Icon Button clicked successfully!', SNACKBAR_PRIORITY.INFO)}
+            //onPress={() => showSnackbar('With Icon Button clicked successfully!', SNACKBAR_PRIORITY.INFO)}
             />
           </Card>
 
@@ -158,7 +158,7 @@ function AppContent() {
             />
           </Card>
 
-          <Spacer size={24} debug={true}/>
+          <Spacer size={24} debug={true} />
 
           {/* Section: Search */}
           <Text style={styles.sectionTitle}>Search Input</Text>
@@ -250,27 +250,29 @@ function AppContent() {
 
           {/* Section: List Items */}
           <Text style={styles.sectionTitle}>List Items</Text>
-          <Card variant="outlined" padding="sm">
-            <ListItem
-              title="Profile Settings"
-              subtitle="Manage your account"
-              leftElement={<User size={24} color={COLORS.primaryContainer} />}
-              onPress={() => { }}
-            />
-            <Divider />
-            <ListItem
-              title="Notifications"
-              subtitle="Configure alerts"
-              leftElement={<Bell size={24} color={COLORS.primaryContainer} />}
-              onPress={() => { }}
-            />
-            <Divider />
-            <ListItem
-              title="Messages"
-              leftElement={<Mail size={24} color={COLORS.primaryContainer} />}
-              onPress={() => { }}
-            />
-          </Card>
+          <ListItem
+            title="Profile Settings"
+            subtitle="Manage your account"
+            leftElement={<User size={24} color={COLORS.primaryContainer} />}
+            onPress={() => { }}
+            itemSeparator={true}
+          />
+          <ListItem
+            title="Notifications"
+            subtitle="Configure alerts"
+            leftElement={<Bell size={24} color={COLORS.primaryContainer} />}
+            onPress={() => { }}
+            itemSeparator={true}
+          />
+          <ListItem
+            title="Messages"
+            leftElement={<Mail size={24} color={COLORS.primaryContainer} />}
+            onPress={() => { }}
+            itemSeparator={true}
+          />
+
+
+
 
           <Spacer size={24} />
 
@@ -347,7 +349,7 @@ function AppContent() {
           <Text style={styles.sectionTitle}>Alerts</Text>
           <Card variant="outlined" padding="md">
             <Alert
-            title="Success"
+              title="Success"
               variant="success"
               message="Your changes have been saved successfully!"
               visible={showAlert}
@@ -412,7 +414,7 @@ function AppContent() {
             <Switch
               label="Airplane mode"
               value={false}
-              onValueChange={() => {}}
+              onValueChange={() => { }}
               disabled
             />
           </Card>
@@ -492,45 +494,45 @@ function AppContent() {
 
           <Spacer size={48} />
         </ScrollView>
-        </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
 
-        {/* Modal */}
-        <Modal
-          visible={showModal}
-          onDismiss={() => setShowModal(false)}
-          presentation="bottomSheet"
-        >
-          <Text style={styles.modalTitle}>Bottom Sheet Modal</Text>
-          <Text style={styles.modalText}>
-            This is a bottom sheet modal. You can add any content here.
-          </Text>
-          <Spacer size={16} />
-          <Button 
-          text="Close Modal" 
-          textColor='white' 
+      {/* Modal */}
+      <Modal
+        visible={showModal}
+        onDismiss={() => setShowModal(false)}
+        presentation="bottomSheet"
+      >
+        <Text style={styles.modalTitle}>Bottom Sheet Modal</Text>
+        <Text style={styles.modalText}>
+          This is a bottom sheet modal. You can add any content here.
+        </Text>
+        <Spacer size={16} />
+        <Button
+          text="Close Modal"
+          textColor='white'
           onPress={() => setShowModal(false)}
-          size="sm"/>
-        </Modal>
+          size="sm" />
+      </Modal>
 
-        {/* Confirmation Dialog */}
-        <ConfirmationDialog
-          visible={showConfirmation}
-          title="Confirm Action"
-          message="Are you sure you want to proceed with this action? This cannot be undone."
-          confirmText="Yes, Proceed"
-          cancelText="Cancel"
-          onConfirm={() => {
-            setShowConfirmation(false);
-            showSnackbar('Action confirmed successfully!', SNACKBAR_PRIORITY.SUCCESS);
-          }}
-          onCancel={() => setShowConfirmation(false)}
-        />
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        visible={showConfirmation}
+        title="Confirm Action"
+        message="Are you sure you want to proceed with this action? This cannot be undone."
+        confirmText="Yes, Proceed"
+        cancelText="Cancel"
+        onConfirm={() => {
+          setShowConfirmation(false);
+          showSnackbar('Action confirmed successfully!', SNACKBAR_PRIORITY.SUCCESS);
+        }}
+        onCancel={() => setShowConfirmation(false)}
+      />
 
-        {/* Centralized Snackbar */}
-        <CentralizedSnackbar />
+      {/* Centralized Snackbar */}
+      <CentralizedSnackbar />
 
-        {/* Loader */}
-        {showLoader && <Loader text="Loading..." />}
+      {/* Loader */}
+      {showLoader && <Loader text="Loading..." />}
     </SafeAreaView>
   );
 }

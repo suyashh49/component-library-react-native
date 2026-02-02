@@ -450,6 +450,9 @@ export interface ListItemProps {
     titleStyle?: StyleProp<TextStyle>;
     /** Custom subtitle style */
     subtitleStyle?: StyleProp<TextStyle>;
+    /** show item separator */
+    itemSeparator?: boolean;
+
 }
 
 // ============================================

@@ -21,9 +21,10 @@ export const ListItem: React.FC<ListItemProps> = ({
     containerStyle,
     titleStyle,
     subtitleStyle,
+    itemSeparator = false,
 }) => {
     const content = (
-        <View style={[styles.container, disabled && styles.disabledContainer, containerStyle]}>
+        <View style={[styles.container, disabled && styles.disabledContainer, containerStyle, itemSeparator && styles.itemSeparator]}>
             {leftElement && <View style={styles.leftElement}>{leftElement}</View>}
 
             <View style={styles.textContainer}>
@@ -94,6 +95,11 @@ const styles = StyleSheet.create({
     },
     rightElement: {
         marginLeft: SPACING.sm,
+    },
+    itemSeparator: {
+        borderColor: COLORS.border,
+        borderWidth: 1,
+        margin: 10,
     },
 });
 
