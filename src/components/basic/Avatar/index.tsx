@@ -43,6 +43,7 @@ export const Avatar: React.FC<AvatarProps> = ({
     imageStyle,
     textStyle,
     onPress,
+    active = true,
 }) => {
     const avatarSize = customSize || SIZE_MAP[size];
     const fontSize = customSize ? customSize * 0.4 : FONT_SIZE_MAP[size];
@@ -77,6 +78,24 @@ export const Avatar: React.FC<AvatarProps> = ({
         </View>
     );
 
+    const renderActiveIndicator = () => {
+        if (!active) return null;
+
+        const indicatorSize = Math.max(avatarSize * 0.25, 8);
+        return (
+            <View
+                style={[
+                    styles.activeIndicator,
+                    {
+                        width: indicatorSize,
+                        height: indicatorSize,
+                        borderRadius: indicatorSize / 2,
+                    },
+                ]}
+            />
+        );
+    };
+
     if (onPress) {
         return (
             <TouchableOpacity
@@ -85,15 +104,23 @@ export const Avatar: React.FC<AvatarProps> = ({
                 style={[styles.container, containerStyle]}
             >
                 {content}
+                {renderActiveIndicator()}
             </TouchableOpacity>
         );
     }
 
-    return <View style={[styles.container, containerStyle]}>{content}</View>;
+    return (
+        <View style={[styles.container, containerStyle]}>
+            {content}
+            {renderActiveIndicator()}
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        position: 'relative',
+    },
     image: {},
     initialsContainer: {
         backgroundColor: COLORS.primaryContainer,
@@ -103,6 +130,14 @@ const styles = StyleSheet.create({
     initials: {
         color: COLORS.white,
         fontWeight: FONT_WEIGHT.bold,
+    },
+    activeIndicator: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        backgroundColor: COLORS.success,
+        borderWidth: 1.5,
+        borderColor: COLORS.white,
     },
 });
 

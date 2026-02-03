@@ -205,6 +205,8 @@ export interface AvatarProps {
     textStyle?: StyleProp<TextStyle>;
     /** Callback when avatar is pressed */
     onPress?: () => void;
+    /** Whether avatar is active */
+    active?: boolean;
 }
 
 // ============================================
