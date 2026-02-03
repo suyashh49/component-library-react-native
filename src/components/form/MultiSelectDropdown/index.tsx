@@ -31,14 +31,16 @@ export const MultiSelectDropdown = <T extends string | number>({
   itemStyle,
   selectedItemStyle,
   labelStyle,
+  selectAll = true,
+  clearAll = true,
 }: MultiSelectDropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredData = searchable
     ? data.filter(item =>
-        item.label.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item.label.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : data;
 
   const isSelected = (itemValue: T) => value.includes(itemValue);
@@ -56,6 +58,23 @@ export const MultiSelectDropdown = <T extends string | number>({
 
   const handleRemove = (itemValue: T) => {
     onChange(value.filter(v => v !== itemValue));
+  };
+
+  const handleSelectAll = () => {
+    const newValues = [...value];
+    filteredData.forEach(item => {
+      if (!newValues.includes(item.value)) {
+        if (!maxSelections || newValues.length < maxSelections) {
+          newValues.push(item.value);
+        }
+      }
+    });
+
+    onChange(newValues);
+  };
+
+  const handleClearAll = () => {
+    onChange([]);
   };
 
   const getSelectedLabels = () => {
@@ -143,8 +162,36 @@ export const MultiSelectDropdown = <T extends string | number>({
                   onChangeText={setSearchQuery}
                   placeholderTextColor={COLORS.textSecondary}
                 />
+                {searchQuery.length > 0 && (
+                  <TouchableOpacity onPress={() => setSearchQuery('')}>
+                    <X size={20} color={COLORS.textSecondary} />
+                  </TouchableOpacity>
+                )}
               </View>
             )}
+
+            {(selectAll || clearAll) && (
+              <View style={styles.actionsContainer}>
+                {selectAll && (
+                  <TouchableOpacity
+                    onPress={handleSelectAll}
+                    style={styles.actionButton}
+                  >
+                    <Text style={styles.actionText}>Select All</Text>
+                  </TouchableOpacity>
+                )}
+                {clearAll && (
+                  <TouchableOpacity
+                    onPress={handleClearAll}
+                    style={styles.actionButton}
+                  >
+                    <Text style={styles.actionText}>Clear All</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+
+
 
             <FlatList
               data={filteredData}
@@ -179,6 +226,8 @@ export const MultiSelectDropdown = <T extends string | number>({
                 <Text style={styles.emptyText}>No items found</Text>
               }
             />
+
+
 
             <TouchableOpacity
               style={styles.doneButton}
@@ -280,6 +329,7 @@ const styles = StyleSheet.create({
     padding: SPACING.sm,
     margin: SPACING.md,
     gap: SPACING.sm,
+    marginBottom: 0,
   },
   searchInput: {
     flex: 1,
@@ -332,6 +382,26 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     fontWeight: FONT_WEIGHT.bold,
     color: COLORS.white,
+  },
+  actionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: SPACING.md,
+    gap: SPACING.sm,
+    // backgroundColor: '#ea1010ff',
+  },
+  actionButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    backgroundColor: COLORS.backgroundSecondary,
+    // backgroundColor: '#eadc10ff',
+  },
+  actionText: {
+    fontSize: FONT_SIZE.sm,
+    color: COLORS.primary,
+    fontWeight: FONT_WEIGHT.medium,
+    // backgroundColor: '#10ea55ff',
   },
 });
 

@@ -650,6 +650,11 @@ export interface MultiSelectDropdownProps<T = string> {
     selectedItemStyle?: StyleProp<ViewStyle>;
     /** Custom label style */
     labelStyle?: StyleProp<TextStyle>;
+    /** Select all option */
+    selectAll?: boolean;
+    /** Clear all option */
+    clearAll?: boolean;
+
 }
 
 // ============================================
